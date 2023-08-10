@@ -1,3 +1,6 @@
+// This code runs on a WebWorker wrapped inside a function body.
+// To export a global symbol, assigned it through 'self'.
+
 self.proxyUrl = "";
 function setProxy(url) {
     self.proxyUrl = url;
