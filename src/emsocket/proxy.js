@@ -7,6 +7,12 @@ function setProxy(url) {
 }
 self.setProxy = setProxy;
 
+self.proxyKey = "";
+function setProxyKey(key) {
+    self.proxyKey = key;
+}
+self.setProxyKey = setProxyKey;
+
 self.textEncoder = new TextEncoder();
 self.textDecoder = new TextDecoder();
 
@@ -35,7 +41,7 @@ class ProxyLink {
 
     handleOpen() {
         // Send proxy request
-        const req = `PROXY IPV4 ${this.udp ? "UDP" : "TCP"} ${this.ip} ${this.port}`;
+        const req = `PROXY IPV4 ${this.udp ? "UDP" : "TCP"} ${this.ip} ${this.port} ${proxyKey}`;
         this.ws.send(textEncoder.encode(req));
         this.sentProxyRequest = true;
     }

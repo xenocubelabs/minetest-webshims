@@ -77,6 +77,20 @@ extern "C" void emsocket_set_proxy(const char *url)
         free(urlcopy); });
 }
 
+EM_JS(void, _set_proxy_key, (const char *key), {
+    setProxyKey(UTF8ToString(key));
+});
+
+EMSCRIPTEN_KEEPALIVE
+extern "C" void emsocket_set_proxy_key(const char *key)
+{
+    char *keycopy = strdup(key);
+    emsocket_run_on_io_thread(false, [keycopy]()
+                              {
+        _set_proxy_key(keycopy);
+        free(keycopy); });
+}
+
 static void io_thread_reenter(void)
 {
     std::vector<std::function<void()>> callbacks;
